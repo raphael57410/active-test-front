@@ -17,7 +17,7 @@ export type TInputProps<T = string> = React.DetailedHTMLProps<
 export const Input = React.forwardRef<HTMLInputElement, TInputProps>(
     ({ className, value, endIcon, onValueChange, onChange, full, ...props }, ref) => {
         return (
-            <div className={"relative w-full"}>
+            <div className={"relative"}>
                 <input
                     autoComplete={props.autoCompleteOff ? "off" : undefined}
                     ref={props.innerRef}
