@@ -3,14 +3,15 @@ import { Button } from "./components/common/Button";
 import { useState } from "react";
 import { fetcher, fetchUtils } from "./utils/axios";
 import { ListNumber } from "./components/ListNumber";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { TNumber } from "./types/number";
 
 function App() {
-    const { data, error, mutate } = useSWR(
+    const { data, error } = useSWR(
         "http://localhost:3001/api/number",
         fetcher<TNumber[]>
     );
+    const { mutate } = useSWRConfig()
     const [number,setNumber] = useState<string>()
     const [errorMessage,setErrorMessage] = useState<string>("")
 
@@ -41,10 +42,12 @@ function App() {
              if (!number?.length){
                  setErrorMessage("️️⛔️ Veuillez entrer un nombre valide svp")
              }else{
-                 fetchUtils.post("http://localhost:3001/api/number", { number }).then(_res => {
+                const newNumber: TNumber =  await fetchUtils.post<TNumber>("http://localhost:3001/api/number", { number }).then(response => {
                      setNumber('');
+                     return response.data
                  })
-                 await mutate({ ...data?.data, number })
+                 console.log(newNumber);
+                 await mutate("http://localhost:3001/api/number")
              }
          }
          }/>

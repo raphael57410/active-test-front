@@ -1,3 +1,4 @@
 export type TNumber = {
-    number:number
+    number:number,
+    lastCreated?:boolean
 }

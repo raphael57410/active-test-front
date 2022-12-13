@@ -32,5 +32,4 @@ export const fetchUtils = {
             },
         }),
 };
-
 export const fetcher = fetchUtils.get;
