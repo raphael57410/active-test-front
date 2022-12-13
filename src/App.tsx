@@ -38,11 +38,14 @@ function App() {
          }
          }/>
          <Button height={"lg"} type={"button"} content={"Envoyer"} color={"secondary"} onClick={async () => {
-             fetchUtils.post("http://localhost:3001/api/number", { number }).then(_res => {
-                 setNumber('');
-             })
-             await mutate({ ...data?.data, number })
-
+             if (!number?.length){
+                 setErrorMessage("️️⛔️ Veuillez entrer un nombre valide svp")
+             }else{
+                 fetchUtils.post("http://localhost:3001/api/number", { number }).then(_res => {
+                     setNumber('');
+                 })
+                 await mutate({ ...data?.data, number })
+             }
          }
          }/>
          {errorMessage && <span className={"text-textError"}>{errorMessage}</span>}
