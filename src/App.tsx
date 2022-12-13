@@ -1,6 +1,7 @@
 import { Input } from "./components/Input";
 import { Button } from "./components/Button";
 import { ChangeEvent, useState } from "react";
+import { fetchUtils } from "./utils/axios";
 
 function App() {
     const [number,setNumber] = useState<string>()
@@ -27,8 +28,10 @@ function App() {
              }
          }
          }/>
-         <Button height={"lg"} type={"button"} content={"Envoyer"} color={"secondary"} onClick={() => {
+         <Button height={"lg"} type={"button"} content={"Envoyer"} color={"secondary"} onClick={async () => {
              console.log(number);
+             await fetchUtils.post("http://localhost:3001/api/number", { number })
+
          }
          }/>
          {errorMessage && <span className={"text-textError"}>{errorMessage}</span>}
